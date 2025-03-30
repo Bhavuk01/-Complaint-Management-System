@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./UserDashboard.css";
 
-const BACKEND_URL = "http://localhost:5000"; // Change to backend URL if hosted
+const BACKEND_URL = "http://localhost:5000"; // Change to hosted backend URL if deployed
 
 function UserDashboard() {
   const navigate = useNavigate();
@@ -13,13 +13,14 @@ function UserDashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const userRole = localStorage.getItem("role"); // Retrieve role from localStorage
+    const userRole = localStorage.getItem("role");
+
     if (!token) {
-      navigate("/login"); // Redirect if not logged in
+      navigate("/login");
       return;
     }
 
-    setRole(userRole); // Set role state
+    setRole(userRole);
 
     // Fetch user details
     axios
@@ -27,9 +28,8 @@ function UserDashboard() {
       .then((response) => setUser(response.data))
       .catch(() => navigate("/userDashboard"));
 
-    // Fetch complaints - Show all if admin, otherwise show user-specific complaints
+    // Fetch complaints based on role
     const complaintsEndpoint = userRole === "admin" ? "/all-complaints" : "/complaints";
-
     axios
       .get(`${BACKEND_URL}${complaintsEndpoint}`, { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => setComplaints(response.data))
@@ -58,15 +58,20 @@ function UserDashboard() {
         {complaints.length === 0 ? (
           <p>No complaints available.</p>
         ) : (
-          <ul>
+          <div className="complaints-list">
             {complaints.map((complaint) => (
-              <li key={complaint._id}>
-                <strong>{complaint.title}</strong> - {complaint.status}  
-                <br />
-                {role === "admin" && <span>Submitted by: {complaint.userName}</span>}
-              </li>
+              <div key={complaint._id} className="complaint-card">
+                <h3>{complaint.title}</h3>
+                <p>{complaint.description}</p>
+                <span className={`status ${complaint.status.toLowerCase()}`}>
+                  {complaint.status}
+                </span>
+                {role === "admin" && (
+                  <p className="submitted-by">Submitted by: {complaint.userName}</p>
+                )}
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
 
