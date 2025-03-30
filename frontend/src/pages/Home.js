@@ -6,7 +6,7 @@ function Home() {
   return (
     <div className="home-container">
       <div className="content">
-        <h1 className="home-title">Effortless Complaint Management</h1>
+        <h1 className="home-title">Effortless Complaint Management For Educational Institutes</h1>
         <p className="home-description">
           A seamless platform to submit, track, and resolve complaints with ease. Ensure transparency and efficiency at your fingertips.
         </p>
