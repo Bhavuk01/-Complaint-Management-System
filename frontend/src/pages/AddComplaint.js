@@ -34,34 +34,34 @@ const AddComplaint = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-xl font-bold mb-4">Submit a Complaint</h2>
-      <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow">
-        <div className="mb-3">
-          <label className="block text-gray-700">Title</label>
+    <div className="add-complaint-container">
+      <form onSubmit={handleSubmit} className="complaint-form">
+        <h2>Submit a Complaint</h2>
+        <div className="input-group">
+          <label>Title</label>
           <input
             type="text"
-            className="border p-2 w-full rounded"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter title"
           />
         </div>
-        <div className="mb-3">
-          <label className="block text-gray-700">Description</label>
+        <div className="input-group">
+          <label>Description</label>
           <textarea
-            className="border p-2 w-full rounded"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-          />
+            placeholder="Describe your issue"
+          ></textarea>
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded w-full"
-          disabled={loading}
-        >
+        <button type="submit" className="submit-btn" disabled={loading}>
           {loading ? "Submitting..." : "Submit Complaint"}
+          
         </button>
+        <button className="back2-btn" onClick={() => navigate("/UserDashboard")}>Back</button>
       </form>
+      
+      
     </div>
   );
 };
