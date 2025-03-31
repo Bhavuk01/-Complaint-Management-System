@@ -1,4 +1,3 @@
-
 require("dotenv").config(); // Load .env variables
 const express = require("express");
 const mongoose = require("mongoose");
@@ -19,7 +18,7 @@ mongoose.connect(process.env.MONGO_URI, {
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 // ✅ User Schema
-const mongoose = require("mongoose");
+
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true }, // Ensure name exists
@@ -121,12 +120,17 @@ app.post("/complaints", authMiddleware, async (req, res) => {
     });
 
     await newComplaint.save();
-    res.status(201).json({ message: "Complaint submitted successfully", complaint: newComplaint });
+    res.status(201).json({ 
+      message: "Complaint submitted successfully", 
+      complaint: newComplaint,
+      redirect: "/userdashboard" // Send redirect path
+    });
   } catch (error) {
     console.error("❌ Error submitting complaint:", error);
     res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 });
+
 
 // ✅ Get Complaints of Logged-in User (GET)
 app.get("/complaints", authMiddleware, async (req, res) => {
@@ -249,3 +253,5 @@ app.post("/staff/resolve", authMiddleware, async (req, res) => {
 // ✅ Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+

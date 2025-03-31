@@ -2,23 +2,14 @@ const express = require("express");
 const Complaint = require("../models/Complaint");
 const User = require("../models/User");
 const authMiddleware = require("../middleware/authMiddleware");
+const { createComplaint } = require("../controllers/complaintController"); // ✅ Ensure correct import
 
 const router = express.Router();
 
-// ✅ Submit a Complaint
-router.post("/", authMiddleware, async (req, res) => {
-  try {
-    const { title, description } = req.body;
-    if (!title || !description) return res.status(400).json({ message: "Title and description are required" });
+// ✅ Use `authMiddleware` if required for complaint creation
+console.log("createComplaint type:", typeof createComplaint);
+router.post("/create", createComplaint);  // ✅ Correct
 
-    const newComplaint = new Complaint({ user: req.user.id, title, description });
-    await newComplaint.save();
-
-    res.status(201).json({ message: "Complaint submitted successfully", complaint: newComplaint });
-  } catch (error) {
-    res.status(500).json({ message: "Internal Server Error", error: error.message });
-  }
-});
 
 // ✅ Get Complaints of Logged-in User
 router.get("/", authMiddleware, async (req, res) => {
