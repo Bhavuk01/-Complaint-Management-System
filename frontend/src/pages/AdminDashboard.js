@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./AdminDashboard.css";
 
-
 const AdminDashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const [staff, setStaff] = useState([]);
@@ -63,7 +62,7 @@ const AdminDashboard = () => {
           <thead>
             <tr className="bg-gray-200">
               <th className="border p-2">Title</th>
-              <th className="border p-2">User</th>
+              <th className="border p-2">Complaint By</th> {/* ✅ New Column */}
               <th className="border p-2">Status</th>
               <th className="border p-2">Assigned To</th>
               <th className="border p-2">Actions</th>
@@ -73,7 +72,7 @@ const AdminDashboard = () => {
             {complaints.map((complaint) => (
               <tr key={complaint._id} className="border">
                 <td className="border p-2">{complaint.title}</td>
-                <td className="border p-2">{complaint.user ? complaint.user.name : "Unknown"}</td>
+                <td className="border p-2">{complaint.user ? complaint.user.name : "Unknown"}</td> {/* ✅ New Column */}
                 <td className="border p-2">{complaint.status}</td>
                 <td className="border p-2">
                   {complaint.assignedTo ? complaint.assignedTo.name : "Not Assigned"}

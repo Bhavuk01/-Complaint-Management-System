@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,7 +6,7 @@ import "./Login.css";
 function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
-  const navigate = useNavigate(); // Hook to navigate pages
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,10 +16,9 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:5000/login", formData);
-      localStorage.setItem("token", response.data.token); // Save token
-      localStorage.setItem("role", response.data.role); // Save role
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", response.data.role);
 
-      // Redirect based on role
       if (response.data.role === "admin") {
         navigate("/admindashboard");
       } else if (response.data.role === "staff") {
@@ -49,6 +47,10 @@ function Login() {
           </div>
           <button type="submit" className="login-btn">Login</button>
         </form>
+        <div className="button-group">
+        <button className="back-btn" onClick={() => navigate("/")}>Home</button>
+          <button className="signup-btn" onClick={() => navigate("/Register")}>Sign Up</button>
+        </div>
       </div>
     </div>
   );
