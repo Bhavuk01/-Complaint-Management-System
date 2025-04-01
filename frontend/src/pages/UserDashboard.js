@@ -61,8 +61,8 @@ function UserDashboard() {
           <div className="complaints-list">
             {complaints.map((complaint) => (
               <div key={complaint._id} className="complaint-card">
-                <h3>{complaint.title}</h3>
-                <p>{complaint.description}</p>
+                <h3><strong>Title:{complaint.title}</strong></h3>
+                <p><strong>Complaint {complaint.userName}:</strong> {complaint.description}</p>
                 <span className={`status ${complaint.status.toLowerCase()}`}>
                   {complaint.status}
                 </span>
